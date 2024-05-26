@@ -109,9 +109,16 @@ RUN \
     && rm -rf /var/lib/apt/lists/*
 
 # add the WSO2 product distribution to user's home directory
+# RUN \
+#     wget -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
+#     && unzip -d ${USER_HOME} ${WSO2_SERVER}.zip \
+#     && chown wso2carbon:wso2 -R ${WSO2_SERVER_HOME} \
+#     && rm -f ${WSO2_SERVER}.zip
+
+COPY --chown=wso2carbon:wso2 ${WSO2_SERVER}.zip ${USER_HOME}/
+
 RUN \
-    wget -O ${WSO2_SERVER}.zip "${WSO2_SERVER_DIST_URL}" \
-    && unzip -d ${USER_HOME} ${WSO2_SERVER}.zip \
+    unzip -d ${USER_HOME} ${WSO2_SERVER}.zip \
     && chown wso2carbon:wso2 -R ${WSO2_SERVER_HOME} \
     && rm -f ${WSO2_SERVER}.zip
 
