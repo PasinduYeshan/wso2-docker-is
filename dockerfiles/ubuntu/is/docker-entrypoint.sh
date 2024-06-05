@@ -32,5 +32,11 @@ test -d ${config_volume} && [ "$(ls -A ${config_volume})" ] && cp -RL ${config_v
 # copy any artifact changes mounted to artifact_volume
 test -d ${artifact_volume} && [ "$(ls -A ${artifact_volume})" ] && cp -RL ${artifact_volume}/* ${WSO2_SERVER_HOME}/
 
+# Replace ${NODE_IP} in axis2.xml with the value of the NODE_IP environment variable
+if [ -f ${WSO2_SERVER_HOME}/repository/conf/axis2/axis2.xml ]; then
+    echo "Replacing \${NODE_IP} with ${NODE_IP} in axis2.xml"
+    sed -i "s/\${NODE_IP}/${NODE_IP}/g" ${WSO2_SERVER_HOME}/repository/conf/axis2/axis2.xml
+fi
+
 # start WSO2 Carbon server
 sh ${WSO2_SERVER_HOME}/bin/wso2server.sh "$@"
